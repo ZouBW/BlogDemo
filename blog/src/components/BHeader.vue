@@ -24,10 +24,14 @@
 </template>
 
 <script>
+import {ArrowDown} from "@element-plus/icons";
 export default {
-  name: "BHeader"
+  name: "BHeader",
+  components: {
+    ArrowDown
+
+  }
 }
-import {ArrowDown} from '@element-plus/icons-vue'
 </script>
 
 <style scoped>

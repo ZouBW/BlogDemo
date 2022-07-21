@@ -1,11 +1,24 @@
-import { createRouter, createWebHistory } from 'vue-router'
-import HomeView from '../views/HomeView.vue'
+import {createRouter, createWebHistory} from 'vue-router'
+import Layout from '../layout/Layout.vue'
+
 
 const routes = [
   {
     path: '/',
-    name: 'home',
-    component: HomeView
+    name: 'Layout',
+    component: Layout,
+    children: [
+      {
+        path: 'home',
+        name: 'Home',
+        component: () => import("@/views/HomeView")
+      }
+    ]
+  },
+  {
+    path: '/login',
+    name: 'login',
+    component: () => import("@/views/LoginView")
   },
 
 ]

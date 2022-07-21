@@ -10,7 +10,7 @@ import zhCn from 'element-plus/es/locale/lang/zh-cn'
 import "@/assets/css/Global.css"
 
 const app = createApp(App)
-app.use(store).use(router).use(ElementPlus, {locale: zhCn}).mount('#app')
+app.use(store).use(router).use(ElementPlus, {locale: zhCn, size: "small"}).mount('#app')
 for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
     app.component(key, component)
 }

@@ -15,6 +15,17 @@ public class UserController {
     @Resource
     UserService userService;
 
+    @PostMapping("/register")
+    public Result<?> register(@RequestBody User user) {
+
+        return userService.register(user);
+    }
+
+    @PostMapping("/login")
+    public Result<?> login(@RequestBody User user) {
+        return userService.checkUser(user);
+    }
+
     @PostMapping
     public Result<?> saveUser(@RequestBody User user) {
         return userService.saveUser(user);
@@ -30,6 +41,11 @@ public class UserController {
     @DeleteMapping("/{id}")
     public Result<?> deleteById(@PathVariable Long id) {
         return userService.deleteById(id);
+    }
+
+    @GetMapping("/{id}")
+    public Result<?> getById(@PathVariable Long id) {
+        return userService.getById(id);
     }
 
     @PutMapping

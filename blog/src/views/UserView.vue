@@ -3,8 +3,8 @@
     <!--    function-->
     <div style="margin: 10px 0">
       <el-button type="primary" @click="add">新增</el-button>
-      <el-button type="primary">导入</el-button>
-      <el-button type="primary">导出</el-button>
+      <!--      <el-button type="primary">导入</el-button>-->
+      <!--      <el-button type="primary">导出</el-button>-->
     </div>
     <!--search-->
     <div style="margin: 10px 0">
@@ -107,7 +107,7 @@ export default {
   },
   methods: {
     load() {
-      request.get("/api/user", {
+      request.get("/user", {
         params: {
           pageNum: this.currentPage,
           pageSize: this.pageSize,
@@ -121,7 +121,7 @@ export default {
     },
     save() {
       if (this.form.id) {
-        request.put("/api/user", this.form).then(res => {
+        request.put("/user", this.form).then(res => {
           console.log(res);
           if (res.code === '0') {
             this.$message.success("更新成功");
@@ -130,7 +130,7 @@ export default {
           }
         });
       } else {
-        request.post("/api/user", this.form).then(res => {
+        request.post("/user", this.form).then(res => {
           console.log(res);
           if (res.code === '0') {
             this.$message.success("新增成功");
@@ -160,7 +160,7 @@ export default {
     },
     handleDelete(id) {
       console.log(id);
-      request.delete("/api/user/" + id)
+      request.delete("/user/" + id)
           .then(res => {
             if (this.res.code === '0') {
               this.$message.success("删除成功")

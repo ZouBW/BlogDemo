@@ -6,15 +6,15 @@
       <el-dropdown>
         <span class="el-dropdown-link">
           <br/>
-          张三
+          {{ user?.nickName }}
           <el-icon class="el-icon--right">
             <arrow-down/>
           </el-icon>
         </span>
         <template #dropdown>
           <el-dropdown-menu>
-            <el-dropdown-item>个人信息</el-dropdown-item>
-            <el-dropdown-item>退出</el-dropdown-item>
+            <el-dropdown-item @click="$router.push('/person')">个人信息</el-dropdown-item>
+            <el-dropdown-item @click="$router.push('/login')">退出</el-dropdown-item>
           </el-dropdown-menu>
         </template>
       </el-dropdown>
@@ -27,10 +27,21 @@
 import {ArrowDown} from "@element-plus/icons";
 export default {
   name: "BHeader",
+  props: ['user'],
+
   components: {
     ArrowDown
+  },
+  created() {
+    let userStr = sessionStorage.getItem("user") || "{}"
+    this.user = JSON.parse(userStr);
+  },
 
-  }
+  data() {
+    return {
+      user: {}
+    }
+  },
 }
 </script>
 

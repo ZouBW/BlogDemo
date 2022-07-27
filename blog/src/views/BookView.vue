@@ -16,8 +16,20 @@
       <el-table-column prop="name" label="名称"/>
       <el-table-column prop="price" label="售价"/>
       <el-table-column prop="author" label="作者"/>
-      <el-table-column prop="createTime" label="出版日期"/>
-      <el-table-column label="设置">
+      <el-table-column prop="createTime" label="出版日期"></el-table-column>
+      <el-table-column label="封面">
+        <template #default="scope">
+          <el-image
+              style="width: 100px; height: 100px"
+              :src="scope.row.cover"
+              :preview-src-list="[scope.row.cover]"
+              :preview-teleported="true"
+              fit="cover"
+
+          />
+        </template>
+      </el-table-column>
+      <el-table-column label="操作">
         <template #default="scope">
           <el-button @click="handleEdit(scope.row)" size="mini">编辑</el-button>
           <el-popconfirm title="确认删除?" @confirm="handleDelete(scope.row.id)">
@@ -60,13 +72,22 @@
             <el-date-picker v-model="form.createTime" value-format="YYYY-MM-DD" type="date" style="width: 80%"
                             clearable></el-date-picker>
           </el-form-item>
+
+          <el-form-item label="封面">
+            <el-upload action="/api/files/upload"
+                       :on-success="filesUploadSuccess" ref="upload">
+              <el-button type="primary">点击上传</el-button>
+            </el-upload
+            >
+          </el-form-item>
         </el-form>
+
         <template #footer>
-      <span class="dialog-footer">
-        <el-button @click="dialogVisible = false">取 消</el-button>
-        <el-button type="primary" @click="save"
-        >确 认</el-button>
-      </span>
+          <span class="dialog-footer">
+            <el-button @click="dialogVisible = false">取 消</el-button>
+            <el-button type="primary" @click="save"
+            >确 认</el-button>
+          </span>
         </template>
       </el-dialog>
     </div>
@@ -96,7 +117,10 @@ export default {
     this.load();
   },
   methods: {
-
+    filesUploadSuccess(res) {
+      console.log(res);
+      this.form.cover = res.data;
+    },
     save() {
       if (this.form.id) {
         request.put("/book", this.form).then(res => {
@@ -139,10 +163,14 @@ export default {
     add() {
       this.dialogVisible = true;
       this.form = {}
+      this.$refs['upload'].clearFiles()
     },
     handleEdit(row) {
       this.form = JSON.parse(JSON.stringify(row))
       this.dialogVisible = true;
+      this.$nextTick(() => {
+        this.$refs['upload'].clearFiles()
+      })
     },
     handleSizeChange() {
       this.load()
